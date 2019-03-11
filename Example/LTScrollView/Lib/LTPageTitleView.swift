@@ -464,6 +464,19 @@ extension LTPageTitleView {
             currentButton.transform = CGAffineTransform(scaleX: layout.scale - scaleDelta, y: layout.scale - scaleDelta)
             nextButton.transform = CGAffineTransform(scaleX: 1.0 + scaleDelta, y: 1.0 + scaleDelta)
         }
+        
+        // 滑动时，若指定了选中标题字体，改变之 -- Aaron
+        let font = layout.titleFont ?? UIFont.systemFont(ofSize: 16)
+        if let selectedFont = layout.titleSelectedFont, selectedFont != font {
+            if progress >= 0.5 {
+                currentButton.titleLabel?.font = font
+                nextButton.titleLabel?.font = selectedFont.withSize(font.pointSize)
+            } else {
+                currentButton.titleLabel?.font = selectedFont.withSize(font.pointSize)
+                nextButton.titleLabel?.font = font
+            }
+        }
+        
         // 判断是否是自定义Slider的宽度（这里指没有自定义）
         if layout.sliderWidth == glt_sliderDefaultWidth {
             
@@ -592,10 +605,11 @@ extension LTPageTitleView {
 extension LTPageTitleView {
     
     private func getRGBWithColor(_ color : UIColor) -> (CGFloat, CGFloat, CGFloat) {
-        guard let components = color.cgColor.components else {
-            fatalError("请使用RGB方式给标题颜色赋值")
-        }
-        return (components[0] * 255, components[1] * 255, components[2] * 255)
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        color.getRed(&red, green: &green, blue: &blue, alpha: nil)
+        return (red * 255, green * 255, blue * 255)
     }
 }
 
@@ -603,14 +617,71 @@ extension LTPageTitleView {
     
     @discardableResult
     private func subButton(frame: CGRect, flag: Int, title: String?, parentView: UIView) -> UIButton {
-        let button = UIButton(type: .custom)
+        let button = ScaledButton(type: .custom)
         button.frame = frame
         button.tag = flag
         button.setTitle(title, for: .normal)
         button.addTarget(self, action: #selector(titleSelectIndex(_:)), for: .touchUpInside)
         button.titleLabel?.font = layout.titleFont
+        if layout.isNeedScale {
+            button.scale = layout.scale * 2
+        }
         parentView.addSubview(button)
         return button
     }
+}
+
+class ScaledButton: UIButton {
+    
+    var scale: CGFloat = 1 {
+        didSet {
+            self.layer.contentsScale = scale
+            self.titleLabel?.layer.contentsScale = scale
+        }
+    }
+    
+    let testLabel = ScaledLabel()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.addSubview(testLabel)
+        testLabel.layer.zPosition = 99
+        self.titleLabel?.alpha = 0
+        
+        let layer = testLabel.layer as? CATiledLayer
+        layer?.levelsOfDetailBias = 4
+        layer?.levelsOfDetail = 4
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        guard let label = self.titleLabel else { return }
+        testLabel.frame = label.frame
+        testLabel.font = label.font
+        testLabel.text = label.text
+        testLabel.textColor = label.textColor
+        testLabel.textAlignment = label.textAlignment
+    }
+    
+    override func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
+        super.setTitleColor(color, for: state)
+        
+        testLabel.textColor = currentTitleColor
+    }
+    
+}
+
+class ScaledLabel: UILabel {
+    
+    override class var layerClass: AnyClass {
+        return CATiledLayer.self
+    }
+
 }
 

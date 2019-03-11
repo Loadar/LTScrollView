@@ -35,7 +35,7 @@ class LTAdvancedManagerDemo: UIViewController {
         let layout = LTLayout()
         layout.isAverage = true
         layout.sliderWidth = 20
-        layout.sliderHeight = 160
+        layout.sliderHeight = 60
         layout.isNeedScale = true
         layout.scale = 3
         layout.titleColor = .black
