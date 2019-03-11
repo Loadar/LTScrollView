@@ -25,6 +25,9 @@ public class LTLayout: NSObject {
     
     /* 标题字号 */
     @objc public var titleFont: UIFont? = UIFont.systemFont(ofSize: 16)
+    /// 标题选中字体, 未指定时使用titleFont -- Aaron
+    /// 内部标题宽度根据titleFont计算，selectedFont字号不同时，指定layout的对应scale, selectedFont仅在字型不同时有效 -- Aaron
+    @objc public var titleSelectedFont: UIFont? = nil
     
     /* 滑块底部线的颜色 - UIColor.blue */
     @objc public var bottomLineColor: UIColor? = UIColor.red

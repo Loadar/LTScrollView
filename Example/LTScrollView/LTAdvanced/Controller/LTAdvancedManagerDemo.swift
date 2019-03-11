@@ -35,6 +35,13 @@ class LTAdvancedManagerDemo: UIViewController {
         let layout = LTLayout()
         layout.isAverage = true
         layout.sliderWidth = 20
+        layout.sliderHeight = 160
+        layout.isNeedScale = true
+        layout.scale = 3
+        layout.titleColor = .black
+        layout.titleSelectColor = .red
+        layout.titleFont = UIFont(name: "PingFangSC-light", size: 16)
+        layout.titleSelectedFont = UIFont(name: "PingFangSC-Semibold", size: 16)
         /* 更多属性设置请参考 LTLayout 中 public 属性说明 */
         return layout
     }()

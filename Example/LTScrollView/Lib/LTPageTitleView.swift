@@ -162,6 +162,9 @@ extension LTPageTitleView {
             let color = (index == 0 ? layout.titleSelectColor : layout.titleColor)
             button.setTitleColor(color, for: .normal)
             upX = button.frame.origin.x + subW + layout.titleMargin
+            // 选中标题字体 -- Aaron
+            let font = index == 0 ? (layout.titleSelectedFont ?? layout.titleFont) : layout.titleFont
+            button.titleLabel?.font = font
             glt_buttons.append(button)
         }
         
@@ -362,6 +365,14 @@ extension LTPageTitleView: LTPageViewDelegate {
     private func setupButtonStatusAnimation(upButton: UIButton, currentButton: UIButton)  {
         upButton.setTitleColor(layout.titleColor, for: .normal)
         currentButton.setTitleColor(layout.titleSelectColor, for: .normal)
+        
+        // 指定了选中标题的字体，做字型的更新(无动画) -- Aaron
+        let font = layout.titleFont ?? UIFont.systemFont(ofSize: 16)
+        guard let selectedFont = layout.titleSelectedFont, selectedFont != font else { return }
+        upButton.titleLabel?.font = font
+        // 使用selectedFont的字型/字体族，font的字体大小
+        currentButton.titleLabel?.font = selectedFont.withSize(font.pointSize)
+        
     }
     
     private func currentIndex() -> Int {
@@ -386,6 +397,11 @@ extension LTPageTitleView: LTPageViewDelegate {
                 }
                 button.setTitleColor(self.layout.titleColor, for: .normal)
             }
+            
+            // 指定了选中标题的字体，做字型的更新(无动画) -- Aaron
+            let font = layout.titleFont ?? UIFont.systemFont(ofSize: 16)
+            guard let selectedFont = layout.titleSelectedFont, selectedFont != font else { continue }
+            button.titleLabel?.font = button.tag == index ? selectedFont.withSize(font.pointSize) : font
         }
         glt_isClickScrollAnimation = false
     }
