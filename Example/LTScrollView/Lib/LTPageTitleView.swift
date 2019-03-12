@@ -623,9 +623,7 @@ extension LTPageTitleView {
         button.setTitle(title, for: .normal)
         button.addTarget(self, action: #selector(titleSelectIndex(_:)), for: .touchUpInside)
         button.titleLabel?.font = layout.titleFont
-        if layout.isNeedScale {
-            button.scale = layout.scale * 2
-        }
+        button.scale = layout.isNeedScale ? layout.scale : 1
         parentView.addSubview(button)
         return button
     }
@@ -635,23 +633,27 @@ class ScaledButton: UIButton {
     
     var scale: CGFloat = 1 {
         didSet {
-            self.layer.contentsScale = scale
-            self.titleLabel?.layer.contentsScale = scale
+            // 放大时才处理
+            guard scale > 1 else {
+                self.titleLabel?.alpha = 1
+                scaledLabel.alpha = 0
+                return
+            }
+            let layer = scaledLabel.layer as? CATiledLayer
+            // 可放大级别
+            layer?.levelsOfDetailBias = Int(ceil(log2(scale)))
+            layer?.levelsOfDetail = 1
         }
     }
     
-    let testLabel = ScaledLabel()
+    let scaledLabel = ScaledLabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.addSubview(testLabel)
-        testLabel.layer.zPosition = 99
+        self.addSubview(scaledLabel)
+        scaledLabel.layer.zPosition = 99
         self.titleLabel?.alpha = 0
-        
-        let layer = testLabel.layer as? CATiledLayer
-        layer?.levelsOfDetailBias = 4
-        layer?.levelsOfDetail = 4
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -661,18 +663,19 @@ class ScaledButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        guard let label = self.titleLabel else { return }
-        testLabel.frame = label.frame
-        testLabel.font = label.font
-        testLabel.text = label.text
-        testLabel.textColor = label.textColor
-        testLabel.textAlignment = label.textAlignment
+        guard let label = self.titleLabel, scaledLabel.alpha > 0 else { return }
+        scaledLabel.frame = label.frame
+        scaledLabel.font = label.font
+        scaledLabel.text = label.text
+        scaledLabel.textColor = label.textColor
+        scaledLabel.textAlignment = label.textAlignment
     }
     
     override func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
         super.setTitleColor(color, for: state)
         
-        testLabel.textColor = currentTitleColor
+        guard scaledLabel.alpha > 0 else { return }
+        scaledLabel.textColor = currentTitleColor
     }
     
 }
