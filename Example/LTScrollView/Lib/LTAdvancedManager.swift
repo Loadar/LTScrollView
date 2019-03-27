@@ -34,7 +34,7 @@ public class LTAdvancedManager: UIView {
     }
     
     private var kHeaderHeight: CGFloat = 0.0
-    private var currentSelectIndex: Int = 0
+    public var currentSelectIndex: Int = 0
     private var lastDiffTitleToNav:CGFloat = 0.0
     private var headerView: UIView?
     private var viewControllers: [UIViewController]
@@ -46,7 +46,7 @@ public class LTAdvancedManager: UIView {
     
     private var titleView: LTPageTitleView!
     
-    @objc public init(frame: CGRect, viewControllers: [UIViewController], titles: [String], currentViewController:UIViewController, layout: LTLayout, titleView: LTPageTitleView? = nil, headerViewHandle handle: () -> UIView) {
+    @objc public init(frame: CGRect, viewControllers: [UIViewController], titles: [String], startIndex: Int = 0, currentViewController:UIViewController, layout: LTLayout, titleView: LTPageTitleView? = nil, headerViewHandle handle: () -> UIView) {
         UIScrollView.initializeOnce()
         UICollectionViewFlowLayout.loadOnce()
         self.viewControllers = viewControllers
@@ -65,6 +65,11 @@ public class LTAdvancedManager: UIView {
         self.titleView.isCustomTitleView = isCustomTitleView
         pageView = setupPageViewConfig(currentViewController: currentViewController, layout: layout, titleView: titleView)
         setupSubViewsConfig(handle)
+        
+        guard startIndex > 0, (0..<titles.count).contains(startIndex) else { return }
+        DispatchQueue.main.after(0.1) {
+            self.titleView?.setupTitleSelectIndex(startIndex)
+        }
     }
     
     deinit {

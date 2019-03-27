@@ -218,7 +218,7 @@ extension LTPageTitleView {
         
     }
     
-    private func setupTitleSelectIndex(_ btnSelectIndex: Int) {
+    public func setupTitleSelectIndex(_ btnSelectIndex: Int) {
         guard let scrollView = mainScrollView else { return }
         if glt_currentIndex == btnSelectIndex || scrollView.isDragging || scrollView.isDecelerating {
             return

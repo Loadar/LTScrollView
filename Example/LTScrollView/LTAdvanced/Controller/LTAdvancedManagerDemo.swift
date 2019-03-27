@@ -68,7 +68,7 @@ class LTAdvancedManagerDemo: UIViewController {
      */
     
     private lazy var advancedManager: LTAdvancedManager = {
-        let advancedManager = LTAdvancedManager(frame: managerReact(), viewControllers: viewControllers, titles: titles, currentViewController: self, layout: layout, headerViewHandle: {[weak self] in
+        let advancedManager = LTAdvancedManager(frame: managerReact(), viewControllers: viewControllers, titles: titles, startIndex: 1, currentViewController: self, layout: layout, headerViewHandle: {[weak self] in
             guard let strongSelf = self else { return UIView() }
             let headerView = strongSelf.testLabel()
             return headerView
@@ -80,10 +80,10 @@ class LTAdvancedManagerDemo: UIViewController {
         //        advancedManager.hoverY = 64
         
         /* 点击切换滚动过程动画 */
-        //        advancedManager.isClickScrollAnimation = true
+//                advancedManager.isClickScrollAnimation = false
         
         /* 代码设置滚动到第几个位置 */
-        //        advancedManager.scrollToIndex(index: viewControllers.count - 1)
+//                advancedManager.scrollToIndex(index:2)
         
         return advancedManager
     }()
