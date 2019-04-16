@@ -38,6 +38,8 @@ class LTAdvancedTestOneVC: UIViewController, LTTableViewProtocal {
         } else {
             automaticallyAdjustsScrollViewInsets = false
         }
+        
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
     }
 }
 

@@ -189,7 +189,7 @@
     private func setupRefreshData()  {
         DispatchQueue.main.after(0.001) {
             UIView.animate(withDuration: 0.34, animations: {
-                self.tableView.contentInset = .zero
+                self.tableView.contentInset.top = 0
             })
             self.simpleRefreshTableViewHandle?(self.tableView, self.currentSelectIndex)
             self.delegate?.glt_refreshScrollView?(self.tableView, self.currentSelectIndex)
