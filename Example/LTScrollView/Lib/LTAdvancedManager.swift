@@ -48,13 +48,13 @@ public class LTAdvancedManager: UIView {
     
     @objc public init(frame: CGRect, viewControllers: [UIViewController], titles: [String], startIndex: Int = 0, currentViewController:UIViewController, layout: LTLayout, titleView: LTPageTitleView? = nil, headerViewHandle handle: () -> UIView) {
         UIScrollView.initializeOnce()
-        UICollectionViewFlowLayout.loadOnce()
+//        UICollectionViewFlowLayout.loadOnce()
         self.viewControllers = viewControllers
         self.titles = titles
         self.currentViewController = currentViewController
         self.layout = layout
         super.init(frame: frame)
-        UICollectionViewFlowLayout.glt_sliderHeight = layout.sliderHeight
+//        UICollectionViewFlowLayout.glt_sliderHeight = layout.sliderHeight
         layout.isSinglePageView = true
         if titleView != nil {
             isCustomTitleView = true

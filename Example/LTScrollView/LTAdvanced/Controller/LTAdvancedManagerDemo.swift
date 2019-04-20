@@ -23,6 +23,7 @@ class LTAdvancedManagerDemo: UIViewController {
         let twoVc = LTAdvancedTestOneVC()
         twoVc.count = 5
         let threeVc = LTAdvancedTestOneVC()
+        threeVc.count = 0
         let fourVc = LTAdvancedTestOneVC()
         return [oneVc, twoVc, threeVc, fourVc]
     }()
