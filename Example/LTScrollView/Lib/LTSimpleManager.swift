@@ -72,14 +72,14 @@
     /* LTSimple的scrollView上下滑动监听 */
     @objc public weak var delegate: LTSimpleScrollViewDelegate?
     
-    private var contentTableView: UIScrollView?
+    public var contentTableView: UIScrollView?
     private var kHeaderHeight: CGFloat = 0.0
     private var headerView: UIView?
     private var viewControllers: [UIViewController]
     private var titles: [String]
     private var layout: LTLayout
     private weak var currentViewController: UIViewController?
-    private var pageView: LTPageView!
+    public var pageView: LTPageView!
     private var currentSelectIndex: Int = 0
     var isCustomTitleView: Bool = false
     

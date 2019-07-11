@@ -40,7 +40,7 @@ public class LTAdvancedManager: UIView {
     private var viewControllers: [UIViewController]
     private var titles: [String]
     private weak var currentViewController: UIViewController?
-    private var pageView: LTPageView!
+    public var pageView: LTPageView!
     private var layout: LTLayout
     var isCustomTitleView: Bool = false
     
