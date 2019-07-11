@@ -34,8 +34,8 @@ public typealias LTDidSelectTitleViewHandle = (Int) -> Void
     private var layout: LTLayout = LTLayout()
     private var glt_textWidths: [CGFloat] = []
     private var glt_lineWidths: [CGFloat] = []
-    private var glt_buttons: [UIButton] = []
-    private var glt_currentIndex: Int = 0
+    public var glt_buttons: [UIButton] = []
+    public var glt_currentIndex: Int = 0
     private var isClick: Bool = false
     private var glt_startOffsetX: CGFloat = 0.0
     private var glt_isClickScrollAnimation = false
@@ -70,7 +70,12 @@ public typealias LTDidSelectTitleViewHandle = (Int) -> Void
     }()
     
     private lazy var sliderLineView: UIView = {
-        let sliderLineView = UIView(frame: CGRect(x: layout.lrMargin, y: bounds.height - layout.bottomLineHeight - layout.pageBottomLineHeight, width: 0, height: layout.bottomLineHeight))
+        let sliderLineView = UIView(frame: CGRect(
+            x: layout.lrMargin,
+            y: bounds.height - layout.bottomLineHeight - layout.pageBottomLineHeight - layout.sliderBottomOffset,
+            width: 0,
+            height: layout.bottomLineHeight
+        ))
         sliderLineView.backgroundColor = layout.bottomLineColor
         return sliderLineView
     }()

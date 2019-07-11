@@ -91,4 +91,8 @@ public class LTLayout: NSObject {
     
     /* 内部使用 - 外界不需要调用 */
     internal var isSinglePageView: Bool = false
+    
+    // 额外添加
+    @objc public var sliderBottomOffset: CGFloat = 0
+    @objc public var width: CGFloat = 0
 }

@@ -26,7 +26,7 @@ public class LTPageView: UIView {
     private var viewControllers: [UIViewController]
     private var titles: [String]
     private var layout: LTLayout = LTLayout()
-    private var glt_currentIndex: Int = 0;
+    public var glt_currentIndex: Int = 0;
     
     @objc public var didSelectIndexBlock: PageViewDidSelectIndexBlock?
     @objc public var addChildVcBlock: AddChildViewControllerBlock?
@@ -105,7 +105,21 @@ extension LTPageView {
 
 extension LTPageView {
     private func setupTitleView() -> LTPageTitleView {
-        let pageTitleView = LTPageTitleView(frame: CGRect(x: 0, y: 0, width: self.bounds.width, height: self.layout.sliderHeight), titles: titles, layout: layout)
+        var width = self.bounds.width
+        if layout.width > 0 {
+            width = layout.width
+        }
+
+        let pageTitleView = LTPageTitleView(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: width,
+                height: self.layout.sliderHeight
+            ),
+            titles: titles,
+            layout: layout
+        )
         pageTitleView.backgroundColor = self.layout.titleViewBgColor
         return pageTitleView
     }
