@@ -126,7 +126,21 @@
  
  extension LTSimpleManager {
     private func setupTitleView() -> LTPageTitleView {
-        let titleView = LTPageTitleView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: layout.sliderHeight), titles: titles, layout: layout)
+        var width = self.bounds.width
+        if layout.width > 0 {
+            width = layout.width
+        }
+        
+        let titleView = LTPageTitleView(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: width,
+                height: layout.sliderHeight
+            ),
+            titles: titles,
+            layout: layout
+        )
         return titleView
     }
  }
