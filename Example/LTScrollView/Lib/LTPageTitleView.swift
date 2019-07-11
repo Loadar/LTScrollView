@@ -59,7 +59,7 @@ public typealias LTDidSelectTitleViewHandle = (Int) -> Void
     private lazy var sliderScrollView: UIScrollView = {
         let sliderScrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height))
         sliderScrollView.showsHorizontalScrollIndicator = false
-        sliderScrollView.bounces = false
+        //sliderScrollView.bounces = false
         return sliderScrollView
     }()
     
