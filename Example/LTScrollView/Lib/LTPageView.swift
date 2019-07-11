@@ -43,7 +43,7 @@ public class LTPageView: UIView {
     
     var isCustomTitleView: Bool = false
     
-    var pageTitleView: LTPageTitleView!
+    public var pageTitleView: LTPageTitleView!
     
     @objc public lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height))
