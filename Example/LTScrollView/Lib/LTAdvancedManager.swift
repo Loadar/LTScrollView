@@ -44,7 +44,7 @@ public class LTAdvancedManager: UIView {
     private var layout: LTLayout
     var isCustomTitleView: Bool = false
     
-    private var titleView: LTPageTitleView!
+    public private(set) var titleView: LTPageTitleView!
     
     @objc public init(frame: CGRect, viewControllers: [UIViewController], titles: [String], startIndex: Int = 0, currentViewController:UIViewController, layout: LTLayout, titleView: LTPageTitleView? = nil, headerViewHandle handle: () -> UIView) {
         UIScrollView.initializeOnce()
